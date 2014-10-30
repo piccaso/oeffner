@@ -39,23 +39,10 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
-        <p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" data-switches='[
-          {"type":"CONRADSINGLE","switchnumber":7,"status":1,"timeout":0},
-          {"type":"CONRADSINGLE","switchnumber":7,"status":0,"timeout":2000}
-        ]'>scha locker 7</p>
-        <p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" data-switches='[
-          {"type":"CONRADSINGLE","switchnumber":8,"status":1,"timeout":0},
-          {"type":"CONRADSINGLE","switchnumber":8,"status":0,"timeout":2000}
-        ]'>scha locker 8</p>
-        <p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" data-switches='[
-          {"type":"CONRADSINGLE","switchnumber":9,"status":1,"timeout":0},
-          {"type":"CONRADSINGLE","switchnumber":9,"status":0,"timeout":2000}
-        ]'>scha locker 9</p>
-        <p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" data-switches='[
-          {"type":"CONRADSINGLE","switchnumber":10,"status":1,"timeout":0},
-          {"type":"CONRADSINGLE","switchnumber":10,"status":0,"timeout":2000}
-        ]'>scha locker 10</p>
-
+        <p class="butt event listening received" data-ip="192.168.20.255" data-port="49494" data-switches='[
+          {"type":"XXXX","switchnumber":7,"status":1,"timeout":0},
+          {"type":"XXXX","switchnumber":7,"status":0,"timeout":2000}
+        ]'>scha door</p>
 
         </div>
         <script type="text/javascript" src="cordova.js"></script>
@@ -63,31 +50,45 @@
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
-            var aborts = function(){
-              next = window.ffxhr.pop();
-              if(next && next.abort){
-                window.setTimeout(aborts,800);
-                next.abort();
-              }else{
-                $('p.butt').css('opacity',1);
-                $('p.butt').css('background-color','');
+            $(document).ready(function(){
+              for(var i=1; i<=27; i++){
+              var el = $('<p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" />');
+              el.html('scha locker ' + i);
+              el.data('switches',[
+                {"type":"CONRADSINGLE","switchnumber":i,"status":1,"timeout":0},
+                {"type":"CONRADSINGLE","switchnumber":i,"status":0,"timeout":2000},
+                {"type":"CONRADSINGLE","switchnumber":i,"status":0,"timeout":5000}
+              ])
 
+              $('div.app').append(el);
               }
-            };
-            $('p.butt').on('click',function(){
-              var t=$(this);
-              t.css('opacity',0.5);
-              t.css('background-color','red');
-              var switches = t.data('switches');
-              var ip = t.data('ip');
-              var port = t.data('port');
-              var url = "http://"+ip+":"+port+"/";
-              if (!window.ffxhr) window.ffxhr=[];
-              $.each(switches, function(i,e){
-                window.ffxhr.unshift($.get(url,e));
+
+              var aborts = function(){
+                next = window.ffxhr.pop();
+                if(next && next.abort){
+                  window.setTimeout(aborts,800);
+                  next.abort();
+                }else{
+                  $('p.butt').css('opacity',1);
+                  $('p.butt').css('background-color','');
+
+                }
+              };
+              $('p.butt').on('click',function(){
+                var t=$(this);
+                t.css('opacity',0.5);
+                t.css('background-color','red');
+                var switches = t.data('switches');
+                var ip = t.data('ip');
+                var port = t.data('port');
+                var url = "http://"+ip+":"+port+"/";
+                if (!window.ffxhr) window.ffxhr=[];
+                $.each(switches, function(i,e){
+                  window.ffxhr.unshift($.get(url,e));
+                });
+                window.setTimeout(aborts,800);
+                //window.setTimeout("document.location.reload(true);",2000);
               });
-              window.setTimeout(aborts,800);
-              //window.setTimeout("document.location.reload(true);",2000);
             });
         </script>
     </body>
