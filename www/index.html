@@ -28,6 +28,9 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Goodbye World</title>
+        <style>
+          p.butt {display:block !important; margin-top: 5px; font-size: 180%; cursor:pointer;}
+        </style>
     </head>
     <body>
         <div class="app">
@@ -36,12 +39,41 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
+        <p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" data-switches='[
+          {"type":"CONRADSINGLE","switchnumber":7,"status":1,"timeout":0},
+          {"type":"CONRADSINGLE","switchnumber":7,"status":0,"timeout":2000}
+        ]'>scha locker 7</p>
+
+
+
+
+
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/zepto.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             app.initialize();
+            var aborts = function(){
+              next = window.ffxhr.pop();
+              if(next && next.abort){
+                window.setTimeout(aborts,800);
+                next.abort();
+              }
+            };
+            $('p.butt').on('click',function(){
+              var t=$(this);
+              var switches = t.data('switches');
+              var ip = t.data('ip');
+              var port = t.data('port');
+              var url = "http://"+ip+":"+port+"/";
+              if (!window.ffxhr) window.ffxhr=[];
+              $.each(switches, function(i,e){
+                window.ffxhr.unshift($.get(url,e));
+              });
+              window.setTimeout(aborts,800);
+              //window.setTimeout("document.location.reload(true);",2000);
+            });
         </script>
     </body>
 </html>
