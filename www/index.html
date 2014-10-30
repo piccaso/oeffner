@@ -29,7 +29,7 @@
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Goodbye World</title>
         <style>
-          p.butt {display:block !important; margin-top: 5px; font-size: 180%; cursor:pointer;}
+          p.butt {display:block !important; margin-top: 10px; margin-bottom:10px; padding-top:25px; padding-bottom:25px; font-size: 150%; cursor:pointer;}
         </style>
     </head>
     <body>
@@ -43,9 +43,18 @@
           {"type":"CONRADSINGLE","switchnumber":7,"status":1,"timeout":0},
           {"type":"CONRADSINGLE","switchnumber":7,"status":0,"timeout":2000}
         ]'>scha locker 7</p>
-
-
-
+        <p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" data-switches='[
+          {"type":"CONRADSINGLE","switchnumber":8,"status":1,"timeout":0},
+          {"type":"CONRADSINGLE","switchnumber":8,"status":0,"timeout":2000}
+        ]'>scha locker 8</p>
+        <p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" data-switches='[
+          {"type":"CONRADSINGLE","switchnumber":9,"status":1,"timeout":0},
+          {"type":"CONRADSINGLE","switchnumber":9,"status":0,"timeout":2000}
+        ]'>scha locker 9</p>
+        <p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" data-switches='[
+          {"type":"CONRADSINGLE","switchnumber":10,"status":1,"timeout":0},
+          {"type":"CONRADSINGLE","switchnumber":10,"status":0,"timeout":2000}
+        ]'>scha locker 10</p>
 
 
         </div>
@@ -59,10 +68,16 @@
               if(next && next.abort){
                 window.setTimeout(aborts,800);
                 next.abort();
+              }else{
+                $('p.butt').css('opacity',1);
+                $('p.butt').css('background-color','');
+
               }
             };
             $('p.butt').on('click',function(){
               var t=$(this);
+              t.css('opacity',0.5);
+              t.css('background-color','red');
               var switches = t.data('switches');
               var ip = t.data('ip');
               var port = t.data('port');
