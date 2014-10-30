@@ -39,9 +39,10 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
             </div>
-        <p class="butt event listening received" data-ip="192.168.20.255" data-port="49494" data-switches='[
-          {"type":"XXXX","switchnumber":7,"status":1,"timeout":0},
-          {"type":"XXXX","switchnumber":7,"status":0,"timeout":2000}
+        <p class="butt event listening received" data-ip="192.168.20.64" data-port="49494" data-switches='[
+          {"type":"GPIO","switchnumber":25,"status":1,"timeout":0},
+          {"type":"GPIO","switchnumber":25,"status":0,"timeout":2000},
+          {"type":"GPIO","switchnumber":25,"status":0,"timeout":5000}
         ]'>scha door</p>
 
         </div>
@@ -52,15 +53,15 @@
             app.initialize();
             $(document).ready(function(){
               for(var i=1; i<=27; i++){
-              var el = $('<p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" />');
-              el.html('scha locker ' + i);
-              el.data('switches',[
-                {"type":"CONRADSINGLE","switchnumber":i,"status":1,"timeout":0},
-                {"type":"CONRADSINGLE","switchnumber":i,"status":0,"timeout":2000},
-                {"type":"CONRADSINGLE","switchnumber":i,"status":0,"timeout":5000}
-              ])
+                var el = $('<p class="butt event listening received" data-ip="192.168.20.67" data-port="49494" />');
+                el.html('scha locker ' + i);
+                el.data('switches',JSON.stringify([
+                  {"type":"CONRADSINGLE","switchnumber":i,"status":1,"timeout":0},
+                  {"type":"CONRADSINGLE","switchnumber":i,"status":0,"timeout":2000},
+                  {"type":"CONRADSINGLE","switchnumber":i,"status":0,"timeout":5000}
+                ]));
 
-              $('div.app').append(el);
+                $('div.app').append(el);
               }
 
               var aborts = function(){
