@@ -34,6 +34,18 @@ var app = {
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
+
+        function onConfirm(buttonIndex) {
+            alert('You selected button ' + buttonIndex);
+        }
+
+        navigator.notification.confirm(
+            'You are the winner!', // message
+             onConfirm,            // callback to invoke with index of button pressed
+            'Game Over',           // title
+            ['Restart','Exit']     // buttonLabels
+        );
+
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
